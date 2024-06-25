@@ -5,5 +5,9 @@ FROM webis/ir-lab-wise-2023:0.0.4
 RUN pip3 uninstall -y tira \
 	&& pip3 install tira
 
+#install spacy for preprocessing
+RUN pip3 uninstall -y spacy \
+	&& pip3 install spacy
+
 ADD . /app
 
