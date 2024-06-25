@@ -9,5 +9,8 @@ RUN pip3 uninstall -y tira \
 RUN pip3 uninstall -y spacy \
 	&& pip3 install spacy
 
+RUN python uninstall -m en_core_web_sm \
+	python -m spacy download en_core_web_sm
+
 ADD . /app
 
