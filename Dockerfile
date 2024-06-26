@@ -6,6 +6,7 @@ RUN pip3 uninstall -y tira \
 	&& pip3 install tira \
 	&& pip3 install nltk \
 	&& pip3 install spacy \
+	&& python -m spacy download en_core_web_sm \
 	&& pip3 install typing-extensions
 
 ADD . /app
