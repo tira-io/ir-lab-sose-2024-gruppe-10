@@ -1,8 +1,0 @@
-"cran"-Ordner wird momentan nicht verwendet. Kann entfernt werden wenn er am Ende nicht gebraucht wird. 
-(ich bin mir auch unsicher, ob der so frei verwendet werden darf)
-
-"references for coding"-Ordner am Ende entfernen.
-
-Diese Datei kann eigentlich am Ende auch weg. 
-
-Sollte jemand außer mir mal hier reinschauen: viel Erfolg in den Prüfungen, und hab nen angenehmen Tag c:

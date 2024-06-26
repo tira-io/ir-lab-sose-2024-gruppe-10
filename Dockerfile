@@ -1,15 +1,23 @@
-# A prepared image with python3.10, java 11, ir_datasets, tira, and PyTerrier installed 
-FROM webis/ir-lab-wise-2023:0.0.4
+FROM webis/tira-ir-starter-pyterrier:0.0.4-base
 
-# Update the tira command to use the latest version
-RUN pip3 uninstall -y tira \
-	&& pip3 install tira
+RUN rm -Rf /workspace/*.ipynb
 
-#install spacy for preprocessing
-RUN pip3 uninstall -y spacy \
-	&& pip3 install spacy
+ADD requirements.txt *.ipynb /workspace/
 
-RUN python -m spacy download en_core_web_sm
+ADD example-ir-dataset /tmp-delete-ir-dataset
 
-ADD . /app
+ARG JUPYTER_NOTEBOOK=pyterrier-notebook.ipynb
 
+RUN pip install -r requirements.txt \
+	&& python -m spacy download en_core_web_sm \
+	&& export TIRA_INPUT_DATASET=/tmp-delete-ir-dataset \
+	&& mv /workspace/${JUPYTER_NOTEBOOK} /workspace/notebook.ipynb \
+	&& export TIRA_OUTPUT_DIR=/tmp \
+	&& ./run-pyterrier-notebook.py --input ${TIRA_INPUT_DATASET} --output ${TIRA_OUTPUT_DIR} --notebook /workspace/notebook.ipynb \
+	&& rm -R /tmp-delete-ir-dataset \
+	&& head -3 /tmp/run.txt \
+	&& rm /tmp/run.txt \
+	&& rm -R /root/.ir_datasets \
+	&& jupyter trust /workspace/*.ipynb
+
+ENTRYPOINT [ "/workspace/run-pyterrier-notebook.py", "--input", "$inputDataset", "--output", "$outputDir", "--notebook", "/workspace/notebook.ipynb" ]
